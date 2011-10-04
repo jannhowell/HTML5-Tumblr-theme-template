@@ -3,32 +3,32 @@
 <!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
 <!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
 <!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
-<!-- Consider adding an manifest.appcache: h5bp.com/d/Offline -->
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
 <head>
 	<meta charset="utf-8">
+	
+	<!-- Change to the domain where your stylesheet(s) and script(s) are hosted.
+	   You may have as many of these as you need, but keep them at the top. -->
     <link rel="dns-prefetch" href="//nathanfitzsimmons.com" />
-	<link rel="dns-prefetch" href="//ajax.googleapis.com" />	
+	<link rel="dns-prefetch" href="//ajax.googleapis.com" /><!--for jQuery-->	
 
-	<!-- Use the .htaccess and remove these lines to avoid edge case issues.
-       More info: h5bp.com/b/378 -->
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
 	<title>{Title}</title>
 	{block:Description}
     <meta name="description" content="{MetaDescription}" />
 	{/block:Description}
-	<meta name="author" content="">
+	
+	<!--Change to individual or organization name-->
+	<meta name="author" content="Nathan Fitzsimmons">
 
 	<!-- Mobile viewport optimized: j.mp/bplateviewport -->
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 
-	<!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
 	<link rel="shortcut icon" href="{Favicon}">
     <link rel="alternate" type="application/rss+xml" href="{RSS}">	
 
 	<!-- CSS: implied media=all -->
-	<!-- CSS concatenated and minified via ant build script-->
 	<link rel="stylesheet" href="http://nathanfitzsimmons.com/blog/style.css">
 	<!-- end CSS-->
 	
@@ -44,112 +44,213 @@
 
   <div id="container">
 
-    <div id="header">
+    <header>
 		<h1>{Title}</h1>
 		{block:Description}
-            <p id="description">{Description}</p>
+            <div id="description">{Description}</div>
         {/block:Description}
-    </div>
+    </header>
 
-    <div id="main" role="main">
+    <section id="main" role="main">
 
-        <ol id="posts">
             {block:Posts}
                 {block:Text}
-                    <li class="post text">
+                    <article class="post text">
                         {block:Title}
-                            <h3><a href="{Permalink}">{Title}</a></h3>
+                        <header>
+                        	<h1><a href="{Permalink}">{Title}</a></h1>
+                        </header>
                         {/block:Title}
 
                         {Body}
-                    </li>
+                        
+                        <footer>
+                        	{block:Date}
+                        	<time pubdate="{MonthNumber}-{DayOfMonth}-{Year}"><a href="{Permalink}">{Month} {DayOfMonth}, {Year}</a></time>
+                        	{/block:Date}
+		                    {block:RebloggedFrom}
+	                        <span>reblogged from <cite><a href="{ReblogParentURL}">{ReblogParentTitle}</a></cite></span>
+	                        {/block:RebloggedFrom}
+                        </footer>                        
+                    </article>
                 {/block:Text}
 
                 {block:Photo}
-                    <li class="post photo">
-                        <img src="{PhotoURL-500}" alt="{PhotoAlt}"/>
-
-                        {block:Caption}
-                            <div class="caption">{Caption}</div>
-                        {/block:Caption}
-                    </li>
+                    <article class="post photo">
+                        <figure>
+	                        <img src="{PhotoURL-500}" alt="{PhotoAlt}"/>
+	                        {block:Caption}
+	                        <figcaption>{Caption}</figcaption>
+	                        {/block:Caption}
+                        </figure>
+                        
+                        <footer>
+                        	{block:Date}
+                        	<time pubdate="{MonthNumber}-{DayOfMonth}-{Year}"><a href="{Permalink}">{Month} {DayOfMonth}, {Year}</a></time>
+                        	{/block:Date}
+		                    {block:RebloggedFrom}
+	                        <span>reblogged from <cite><a href="{ReblogParentURL}">{ReblogParentTitle}</a></cite></span>
+	                        {/block:RebloggedFrom}
+                        </footer>                        
+                    </article>
                 {/block:Photo}
                 
                 {block:Photoset}
-                    <li class="post photoset">
-                        {Photoset-500}
-
-                        {block:Caption}
-                            <div class="caption">{Caption}</div>
-                        {/block:Caption}
-                    </li>
+                    <article class="post photoset">
+                        <figure>
+	                        {Photoset-500}
+	                        {block:Caption}
+	                        <figcaption>{Caption}</figcaption>
+	                        {/block:Caption}
+                        </figure>
+                        
+                        <footer>
+                        	{block:Date}
+                        	<time pubdate="{MonthNumber}-{DayOfMonth}-{Year}"><a href="{Permalink}">{Month} {DayOfMonth}, {Year}</a></time>
+                        	{/block:Date}
+		                    {block:RebloggedFrom}
+	                        <span>reblogged from <cite><a href="{ReblogParentURL}">{ReblogParentTitle}</a></cite></span>
+	                        {/block:RebloggedFrom}
+                        </footer>                        
+                    </article>
                 {/block:Photoset}
 
                 {block:Quote}
-                    <li class="post quote">
-                        "{Quote}"
+                    <article class="post quote">
+                        <blockquote>&ldquo;{Quote}&rdquo;</blockquote>
 
                         {block:Source}
-                            <div class="source">{Source}</div>
+                        <div class="source"><cite>{Source}</cite></div>
                         {/block:Source}
-                    </li>
+                        
+                        <footer>
+                        	{block:Date}
+                        	<time pubdate="{MonthNumber}-{DayOfMonth}-{Year}"><a href="{Permalink}">{Month} {DayOfMonth}, {Year}</a></time>
+                        	{/block:Date}
+		                    {block:RebloggedFrom}
+	                        <span>reblogged from <cite><a href="{ReblogParentURL}">{ReblogParentTitle}</a></cite></span>
+	                        {/block:RebloggedFrom}
+                        </footer>
+                    </article>
                 {/block:Quote}
 
                 {block:Link}
-                    <li class="post link">
-                        <a href="{URL}" class="link" {Target}>{Name}</a>
+                    <article class="post link">
+                        <header>
+                        	<h1><a href="{URL}" class="link" {Target}>{Name}</a></h1>
+                        </header>
 
                         {block:Description}
-                            <div class="description">{Description}</div>
+                        <div class="description">{Description}</div>
                         {/block:Description}
-                    </li>
+                        
+                        <footer>
+                        	{block:Date}
+                        	<time pubdate="{MonthNumber}-{DayOfMonth}-{Year}"><a href="{Permalink}">{Month} {DayOfMonth}, {Year}</a></time>
+                        	{/block:Date}
+		                    {block:RebloggedFrom}
+	                        <span>reblogged from <cite><a href="{ReblogParentURL}">{ReblogParentTitle}</a></cite></span>
+	                        {/block:RebloggedFrom}
+                        </footer>
+                    </article>
                 {/block:Link}
 
                 {block:Chat}
-                    <li class="post chat">
+                    <article class="post chat">
                         {block:Title}
-                            <h3><a href="{Permalink}">{Title}</a></h3>
+                            <header>
+	                            <h1><a href="{Permalink}">{Title}</a></h1>
+	                        </header>
                         {/block:Title}
 
                         <ul class="chat">
                             {block:Lines}
-                                <li class="{Alt} user_{UserNumber}">
-                                    {block:Label}
-                                        <span class="label">{Label}</span>
-                                    {/block:Label}
+                            <li class="{Alt} user_{UserNumber}">
+                                {block:Label}
+                                    <span class="label">{Label}</span>
+                                {/block:Label}
 
-                                    {Line}
-                                </li>
+                                {Line}
+                            </li>
                             {/block:Lines}
                         </ul>
-                    </li>
+                        
+                        <footer>
+                        	{block:Date}
+                        	<time pubdate="{MonthNumber}-{DayOfMonth}-{Year}"><a href="{Permalink}">{Month} {DayOfMonth}, {Year}</a></time>
+                        	{/block:Date}
+		                    {block:RebloggedFrom}
+	                        <span>reblogged from <cite><a href="{ReblogParentURL}">{ReblogParentTitle}</a></cite></span>
+	                        {/block:RebloggedFrom}
+                        </footer>                       
+                    </article>
                 {/block:Chat}
 
                 {block:Video}
-                    <li class="post video">
-                        {Video-500}
-
-                        {block:Caption}
-                            <div class="caption">{Caption}</div>
-                        {/block:Caption}
-                    </li>
+                    <article class="post video">
+                        <figure>
+	                        {Video-500}
+	                        {block:Caption}
+	                        <figcaption>{Caption}</figcaption>
+	                        {/block:Caption}
+                        </figure>
+                        
+                        <footer>
+                        	{block:Date}
+                        	<time pubdate="{MonthNumber}-{DayOfMonth}-{Year}"><a href="{Permalink}">{Month} {DayOfMonth}, {Year}</a></time>
+                        	{/block:Date}
+		                    {block:RebloggedFrom}
+	                        <span>reblogged from <cite><a href="{ReblogParentURL}">{ReblogParentTitle}</a></cite></span>
+	                        {/block:RebloggedFrom}
+                        </footer>
+                    </article>
                 {/block:Video}
 
                 {block:Audio}
-                    <li class="post audio">
-                        {AudioPlayerBlack}
-
-                        {block:Caption}
-                            <div class="caption">{Caption}</div>
-                        {/block:Caption}
-                    </li>
+                    <article class="post audio">
+                        <figure>
+	                        {AudioPlayerBlack}
+	                        {block:Caption}
+                            <figcaption>{Caption}</figcaption>
+	                        {/block:Caption}
+                        </figure>
+                        
+                        <footer>
+                        	{block:Date}
+                        	<time pubdate="{MonthNumber}-{DayOfMonth}-{Year}"><a href="{Permalink}">{Month} {DayOfMonth}, {Year}</a></time>
+                        	{/block:Date}
+		                    {block:RebloggedFrom}
+	                        <span>reblogged from <cite><a href="{ReblogParentURL}">{ReblogParentTitle}</a></cite></span>
+	                        {/block:RebloggedFrom}
+                        </footer>                        
+                    </article>
                 {/block:Audio}
+                
+                {block:Answer}
+                    <article class="post answer">
+                        <header>
+	                        <h1>{Question}</h1>
+						</header>
+                        
+                        <div class="description">{Answer}</div>
+
+                        <div class="source">asked by <cite>{Asker}</cite></div>
+                        
+                        <footer>
+                        	{block:Date}
+                        	<time pubdate="{MonthNumber}-{DayOfMonth}-{Year}"><a href="{Permalink}">{Month} {DayOfMonth}, {Year}</a></time>
+                        	{/block:Date}
+		                    {block:RebloggedFrom}
+	                        <span>reblogged from <cite><a href="{ReblogParentURL}">{ReblogParentTitle}</a></cite></span>
+	                        {/block:RebloggedFrom}
+                        </footer>
+                    </article>
+                {/block:Answer}
             {/block:Posts}
-        </ol>
-        
-    </div>
+        {PostNotes}
+    </section>
     
-    <div id="footer">
+    <footer>
 		{block:PreviousPage}
 		    <a href="{PreviousPage}">&#171; Previous</a>
 		{/block:PreviousPage}
@@ -158,19 +259,27 @@
 		    <a href="{NextPage}">Next &#187;</a>
 		{/block:NextPage}
 		
-		<a href="/archive">Archive</a>
-    </div>
+		<nav>
+			<ul>
+				<li><a href="/archive">Archive</a></li>
+				{block:HasPages}
+					{block:Pages}<li><a href="{URL}">{Label}</a></li>{/block:Pages}
+				{/block:HasPages}
+			</ul>
+		</nav>
+    </footer>
     
 </div> <!--! end of #container -->
 
 
 	<!-- JavaScript at the bottom for fast page loading -->
 	
-	<!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
+	<!-- Grab Google CDN's jQuery -->
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 	
-	<!-- scripts concatenated and minified via ant build script-->
-	<!--   <script defer src="http://nathanfitzsimmons.com/blog/plugins.js"></script> -->
+	<!-- scripts -->
+	<!-- Put your jQuery plugins in plugins.js and page scripts in script.js -->
+	<script defer src="http://nathanfitzsimmons.com/blog/plugins.js"></script>
 	<script defer src="http://nathanfitzsimmons.com/blog/script.js"></script>
 	<!-- end scripts-->
 	
@@ -192,6 +301,10 @@
 	<script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
 	<script>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
 	<![endif]-->
-  
+
+<!--TODO list-->
+<!-- Incorporate Typekit & GA id's as variables -->
+<!-- Incorporate offsite hosting URL as a variable -->
+<!-- /TODO -->
 </body>
 </html>
