@@ -10,10 +10,15 @@
 	<!-- Change to the domain where your stylesheet(s) and script(s) are hosted.
 	   You may have as many of these as you need, but keep them at the top. -->
     <link rel="dns-prefetch" href="//nathanfitzsimmons.com" />
+    
 	<link rel="dns-prefetch" href="//ajax.googleapis.com" /><!--for jQuery-->	
 
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
+	<!-- Custom Tumblr variables -->
+	<meta name="text:Typekit ID" content=""/>
+	<meta name="text:Google Analytics ID" content=""/>
+	
 	<title>{Title}</title>
 	{block:Description}
     <meta name="description" content="{MetaDescription}" />
@@ -30,6 +35,9 @@
 
 	<!-- CSS: implied media=all -->
 	<link rel="stylesheet" href="http://nathanfitzsimmons.com/blog/style.css">
+	<style>
+	{CustomCSS}
+	</style>
 	<!-- end CSS-->
 	
 	<!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
@@ -302,9 +310,11 @@
 	<script>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
 	<![endif]-->
 
-<!--TODO list-->
+<!-- TODO list -->
 <!-- Incorporate Typekit & GA id's as variables -->
-<!-- Incorporate offsite hosting URL as a variable -->
+<!-- Review style.css, plugins.js, and script.js for relevancy to Tumblr theme -->
+<!-- Add author/organization thumb {PortraitURL-24} -->
+<!-- Display {CopyrightYears} in footer -->
 <!-- /TODO -->
 </body>
 </html>
