@@ -4,48 +4,91 @@
 <!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
 <!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<!--[if IEMobile 7 ]>    <html class="no-js iem7"> <![endif]-->
+<!--[if (gt IEMobile 7)|!(IEMobile)]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
 	<meta charset="utf-8">
 	
-	<!-- Change to the domain where your stylesheet(s) and script(s) are hosted.
-	   You may have as many of these as you need, but keep them at the top. -->
-    <link rel="dns-prefetch" href="[YOUR SITE HERE]" />
-    
-	<link rel="dns-prefetch" href="//ajax.googleapis.com" /><!--for jQuery-->	
+	<!-- Custom Tumblr variables -->
+	<meta name="text:File Host" content="" />	
+	<meta name="text:Typekit ID" content="" />
+	<meta name="text:Google Analytics ID" content="" />
+	<meta name="text:Author Name" content="" />
+	
+	<!--DNS prefetch. optional, may provide speed boost for assets called later -->
+    {block:IfFileHost}
+    <link rel="dns-prefetch" href="{text:File Host}" />
+    {/block:IfFileHost}    
+	<link rel="dns-prefetch" href="//ajax.googleapis.com" />	
 
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-
-	<!-- Custom Tumblr variables -->
-	<meta name="text:Typekit ID" content=""/>
-	<meta name="text:Google Analytics ID" content=""/>
 	
 	<title>{Title}</title>
 	{block:Description}
     <meta name="description" content="{MetaDescription}" />
 	{/block:Description}
 	
-	<!--Change to individual or organization name-->
-	<meta name="author" content="Nathan Fitzsimmons">
-
-	<!-- Mobile viewport optimized: j.mp/bplateviewport -->
-	<meta name="viewport" content="width=device-width,initial-scale=1">
+	{block:IfAuthorName}
+	<meta name="author" content="{text:Author Name}">
+	{/block:IfAuthorName}
+	
+	<!-- Mobile viewport optimization http://goo.gl/b9SaQ -->
+	<meta name="HandheldFriendly" content="True">
+	<meta name="MobileOptimized" content="320">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<!-- Home screen icon  Mathias Bynens http://goo.gl/6nVq0 -->
+	<!-- For iPhone 4 with high-resolution Retina display: -->
+	{block:IfFileHost}
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="{text:File Host}/h/apple-touch-icon.png">
+	<!-- For first-generation iPad: -->
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="{text:File Host}/m/apple-touch-icon.png">
+	<!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+	<link rel="apple-touch-icon-precomposed" href="{text:File Host}/l/apple-touch-icon-precomposed.png">
+	<!-- For nokia devices: -->
+	<link rel="shortcut icon" href="{text:File Host}/l/apple-touch-icon.png">
+	{/block:IfFileHost}
+		
+	<!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading -->
+	<meta http-equiv="cleartype" content="on">
+	
+	<!-- more tags for your 'head' to consider https://gist.github.com/849231 -->	
 
 	<link rel="shortcut icon" href="{Favicon}">
     <link rel="alternate" type="application/rss+xml" href="{RSS}">	
 
 	<!-- CSS: implied media=all -->
-	<link rel="stylesheet" href="[YOUR SITE HERE]/style.css">
+	{block:IfFileHost}
+	<link rel="stylesheet" href="{text:File Host}/style.css">
+	{/block:IfFileHost}
 	<style>
 	{CustomCSS}
 	</style>
 	<!-- end CSS-->
 	
+	<!-- Prevent FOUT if using Typekit -->
+	{block:IfTypekitID}
+	<style type="text/css">
+		.wf-loading #container {
+			visibility: hidden;
+		}
+	</style>
+	{/block:IfTypekitID}
+	
 	<!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
 	
-	<!-- All JavaScript at the bottom, except for Modernizr / Respond.
+	<!-- Load Typekit -->
+	{block:IfTypekitID}
+	<script type="text/javascript" src="http://use.typekit.net/{text:Typekit ID}.js"></script>
+	<script type="text/javascript">	try{Typekit.load();}catch(e){} </script>
+	{/block:IfTypekitID}
+	
+	<!-- All JavaScript at the bottom, except for Modernizr / Respond & Typekit
 	   Modernizr enables HTML5 elements & feature detects; Respond is a polyfill for min/max-width CSS3 Media Queries
 	   For optimal performance, use a custom Modernizr build: www.modernizr.com/download/ -->
-	<script src="[YOUR SITE HERE]/modernizr-2.0.6.min.js"></script>
+	{block:IfFileHost}
+	<script src="{text:File Host}/modernizr-2.0.6.min.js"></script>
+	{/block:IfFileHost}
 </head>
 
 <body>
@@ -53,9 +96,9 @@
   <div id="container">
 
     <header>
-		<h1>{Title}</h1>
+		<h1><a href="/" title="{Title}">{Title}</a></h1>
 		{block:Description}
-            <div id="description">{Description}</div>
+            <div id="description"><img src="{PortraitURL-40}" alt="{Title}" />{Description}</div>
         {/block:Description}
     </header>
 
@@ -275,6 +318,8 @@
 				{/block:HasPages}
 			</ul>
 		</nav>
+		
+		<p class="copyright">&copy; Copyright {CopyrightYears} {Title}.</p>
     </footer>
     
 </div> <!--! end of #container -->
@@ -287,21 +332,27 @@
 	
 	<!-- scripts -->
 	<!-- Put your jQuery plugins in plugins.js and page scripts in script.js -->
-	<script defer src="[YOUR SITE HERE]/plugins.js"></script>
-	<script defer src="[YOUR SITE HERE]/script.js"></script>
-	<!-- end scripts-->
-	
-	
-	<!-- Change UA-XXXXX-X to be your site's ID -->
-	<!--
+	{block:IfFileHost}
+	<script defer src="{text:File Host}/plugins.js"></script>
+	<script defer src="{text:File Host}/script.js"></script>
 	<script>
-	window._gaq = [['_setAccount','UAXXXXXXXX1'],['_trackPageview'],['_trackPageLoadTime']];
+	    // iPhone Scale Bug Fix, read this when using http://www.blog.highub.com/mobile-2/a-fix-for-iphone-viewport-scale-bug/
+	    MBP.scaleFix();
+	    //Uncomment if you want URL bar hidden on load in iOS/Android
+	    //MBP.hideUrlBar();
+	</script>
+	{/block:IfFileHost}
+	<!-- end scripts-->
+		
+	<!-- Change UA-XXXXX-X to be your site's ID -->
+	{block:IfGoogleAnalyticsID}
+	<script>
+	window._gaq = [['_setAccount','UA{text:Google Analytics ID}1'],['_trackPageview'],['_trackPageLoadTime']];
 	Modernizr.load({
 	  load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
 	});
 	</script>
-	-->
-	
+	{/block:IfGoogleAnalyticsID}
 	
 	<!-- Prompt IE 6 users to install Chrome Frame. Remove this if you want to support IE 6.
 	   chromium.org/developers/how-tos/chrome-frame-getting-started -->
@@ -311,9 +362,6 @@
 	<![endif]-->
 
 <!-- TODO list -->
-<!-- Incorporate Typekit & GA id's as variables -->
-<!-- Review style.css, plugins.js, and script.js for relevancy to Tumblr theme -->
-<!-- Add author/organization thumb {PortraitURL-24} -->
 <!-- Display {CopyrightYears} and blog title in footer -->
 <!-- /TODO -->
 </body>
